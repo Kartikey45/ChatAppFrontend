@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import TextField from "@material-ui/core/TextField";
 import { Link } from "react-router-dom";
 import CustomToast from "../CustomToast";
+import UserService from "../../Services/UserService"
 
 const nameValidation = /^[A-Z][a-zA-Z]*$/;
 const emailValidation = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
@@ -119,18 +120,19 @@ export default class Register extends React.Component {
       });
     } 
     else {
-    //   UserService.register(userData)
-    //     .then((data) => {
-    //       console.log(data.data.data.message);
-    //       this.setState({ Open: true, Message: "Registered Successfully" });
-    //     })
-    //     .catch((error) => {
-    //       console.log(error.message);
-    //       this.setState({
-    //         Open: true,
-    //         Message: "Email already exists",
-    //       });
-    //     });
+      console.log("hello.......!");
+      UserService.register(userData)
+        .then((data) => {
+          console.log(data.data.message);
+          this.setState({ Open: true, Message: "Registered Successfully" });
+        })
+        .catch((error) => {
+          console.log(error.message);
+          this.setState({
+            Open: true,
+            Message: "Email already exists",
+          });
+        });
     }
   };
 
@@ -258,20 +260,20 @@ export default class Register extends React.Component {
                 <Link to="/signin">
                   <h6>Sign in instead</h6>
                 </Link>
-                <Button type="submit"    variant="primary">
+                <Button type="submit" onClick={this.onSubmit}   variant="primary">
                   Create account
                 </Button>
               </div>
             </form>
           </div>
-          <div className="image">
+          {/* <div className="image">
             <img
               src="https://ssl.gstatic.com/accounts/signup/glif/account.svg"
               alt=""
               width="244"
               height="244"
             ></img>
-          </div>
+          </div> */}
         </div>
         <CustomToast
           display={this.state.Open}
